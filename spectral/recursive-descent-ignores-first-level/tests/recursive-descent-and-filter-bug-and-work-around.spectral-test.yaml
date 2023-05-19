@@ -1,0 +1,39 @@
+spectralTestSuite: "0.1"
+ruleset: ../recursive-descent-ignores-first-level.spectral-v6.yaml
+rules:
+  recursive-descent-and-filter-bug: &recursive-descent-and-filter-tests
+    format: openapi
+    versions: [ "3.1" ]
+    given:
+      # Fails with $.components.schemas.*..[?(@.type=="array")] path
+      - description: must find first level array
+        expected:
+          - [ components, schemas, SchemaArray ]
+        documents:
+          openapi: "3.1.0"
+          info:
+            title: An API
+            version: "1.0"
+          components:
+            schemas:
+              SchemaArray:
+                type: array
+                items:
+                  type: object
+      - description: must find deep array
+        expected:
+          - [ components, schemas, SchemaObject, properties, aPropertyArray ]
+        documents:
+          openapi: "3.1.0"
+          info:
+            title: An API
+            version: "1.0"
+          components:
+            schemas:
+              SchemaObject:
+                type: object
+                properties:
+                  aPropertyArray:
+                    type: array
+  recursive-descent-and-filter-work-around-1: *recursive-descent-and-filter-tests
+  recursive-descent-and-filter-work-around-2: *recursive-descent-and-filter-tests

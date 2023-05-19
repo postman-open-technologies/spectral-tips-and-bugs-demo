@@ -1,0 +1,40 @@
+description: |
+  The recursive descent operator ".." ignores first level elements when a filter is used.
+rules:
+  recursive-descent-and-filter-bug:
+    formats:
+      - oas3_1
+    given:
+      - $.components.schemas.*..[?(@.type=="array")]
+    then:
+      - field: maxItems
+        function: defined
+
+  recursive-descent-and-filter-work-around-1:
+    formats:
+      - oas3_1
+    given:
+      - $.components.schemas.[?(@.type=="array")]
+      - $.components.schemas.*..[?(@.type=="array")]
+    then:
+      - field: maxItems
+        function: defined
+
+  recursive-descent-and-filter-work-around-2:
+    formats:
+      - oas3_1
+    given:
+      - $.components.schemas..[?(@.type=="array")]
+    then:
+      - field: maxItems
+        function: defined
+
+  recursive-descent-without-filter:
+    formats:
+      - oas3_1
+    given:
+      - $.components.schemas.*..type
+    then:
+      - function: pattern
+        functionOptions:
+          notMatch: boolean

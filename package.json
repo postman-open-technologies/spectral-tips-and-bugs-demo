@@ -1,0 +1,29 @@
+{
+  "name": "spectral-bugs-demo",
+  "version": "1.0.0",
+  "description": "Some rulesets samples demonstrating Spectral bugs and possible workarounds",
+  "main": "index.js",
+  "scripts": {
+    "test": "npx mocha ./tests/spectral.test.js --disable-completeness --disable-then-count --disable-given-count --silent-skip",
+    "recursive-descent-ignores-first-level-all-unit-tests": "npx mocha ./tests/spectral.test.js --tests \"spectral/recursive-descent-ignores-first-level/**/*.spectral-test.yaml\" --disable-completeness --disable-then-count --disable-given-count --silent-skip",
+    "recursive-descent-ignores-first-level-bug-unit-test": "npx mocha ./tests/spectral.test.js --rule recursive-descent-and-filter-bug --tests \"spectral/recursive-descent-ignores-first-level/**/*.spectral-test.yaml\" --disable-completeness --disable-then-count --disable-given-count --silent-skip",
+    "recursive-descent-ignores-first-level-spectral-run": "spectral lint -r spectral/recursive-descent-ignores-first-level/recursive-descent-ignores-first-level.spectral-v6.yaml spectral/recursive-descent-ignores-first-level/samples/recursive-descent-and-filter.openapi.yaml"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/postman-open-technologies/spectral-bugs-demo.git"
+  },
+  "keywords": [
+    "spectral"
+  ],
+  "author": "Arnaud Lauret",
+  "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/postman-open-technologies/spectral-bugs-demo/issues"
+  },
+  "homepage": "https://github.com/postman-open-technologies/spectral-bugs-demo#readme",
+  "devDependencies": {
+    "@postman-open-tech/spectral-test-suite": "^0.1.1",
+    "mocha": "^10.2.0"
+  }
+}

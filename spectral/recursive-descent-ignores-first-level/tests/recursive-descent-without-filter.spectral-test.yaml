@@ -1,0 +1,33 @@
+spectralTestSuite: "0.1"
+ruleset: ../recursive-descent-ignores-first-level.spectral-v6.yaml
+rules:
+  recursive-descent-without-filter:
+    format: openapi
+    versions: [ "3.1" ]
+    given:
+      - description: Must find first level type
+        expected: 
+          - [ components, schemas, SchemaBoolean, type ]
+        documents:
+          openapi: "3.1.0"
+          info:
+            title: An API
+            version: "1.0"
+          components:
+            schemas:
+              SchemaBoolean:
+                type: boolean
+      - description: Must find deep type
+        expected: 
+          - [ components, schemas, SchemaObject, properties, aBooleanProperty, type ]
+        documents:
+          openapi: "3.1.0"
+          info:
+            title: An API
+            version: "1.0"
+          components:
+            schemas:
+              SchemaObject:
+                properties:
+                  aBooleanProperty:
+                    type: boolean

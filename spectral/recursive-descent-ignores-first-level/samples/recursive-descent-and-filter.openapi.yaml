@@ -1,0 +1,15 @@
+openapi: "3.1.0"
+info:
+  title: An API
+  version: "1.0"
+components:
+  schemas:
+    SchemaArray: # Not found by recursive-descent-and-filter-bug rule
+      type: array
+      items:
+        type: object
+    SchemaObject:
+      type: object
+      properties:
+        aPropertyArray: # Found by the 3 rules
+          type: array
