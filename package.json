@@ -5,9 +5,9 @@
   "main": "index.js",
   "scripts": {
     "test": "npx mocha ./tests/spectral.test.js --disable-completeness --disable-then-count --disable-given-count --silent-skip",
-    "recursive-descent-ignores-first-level-all-unit-tests": "npx mocha ./tests/spectral.test.js --tests \"spectral/recursive-descent-ignores-first-level/**/*.spectral-test.yaml\" --disable-completeness --disable-then-count --disable-given-count --silent-skip",
-    "recursive-descent-ignores-first-level-bug-unit-test": "npx mocha ./tests/spectral.test.js --rule recursive-descent-and-filter-bug --tests \"spectral/recursive-descent-ignores-first-level/**/*.spectral-test.yaml\" --disable-completeness --disable-then-count --disable-given-count --silent-skip",
-    "recursive-descent-ignores-first-level-spectral-run": "spectral lint -r spectral/recursive-descent-ignores-first-level/recursive-descent-ignores-first-level.spectral-v6.yaml spectral/recursive-descent-ignores-first-level/samples/recursive-descent-and-filter.openapi.yaml"
+    "spectral-run-recursive-descent": "spectral lint -r spectral/recursive-descent-ignores-first-level/recursive-descent-ignores-first-level.spectral-v6.yaml spectral/recursive-descent-ignores-first-level/samples/recursive-descent-and-filter.openapi.yaml",
+    "spectral-run-regex-crash": "spectral lint -r spectral/regex-filter-targeting-non-existing-property-crashes/crash.spectral-v6.yaml spectral/regex-filter-targeting-non-existing-property-crashes/samples/crash.openapi.yaml",
+    "spectral-run-regex-workaround": "spectral lint -r spectral/regex-filter-targeting-non-existing-property-crashes/work-around.spectral-v6.yaml spectral/regex-filter-targeting-non-existing-property-crashes/samples/crash.openapi.yaml"
   },
   "repository": {
     "type": "git",

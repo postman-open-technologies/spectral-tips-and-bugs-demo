@@ -37,3 +37,4 @@ rules:
                     type: array
   recursive-descent-and-filter-work-around-1: *recursive-descent-and-filter-tests
   recursive-descent-and-filter-work-around-2: *recursive-descent-and-filter-tests
+  recursive-descent-and-filter-work-around-3: *recursive-descent-and-filter-tests

@@ -1,0 +1,16 @@
+description: ""
+rules:
+  #regex-crash:
+  #  given:
+  #    - $..[?(@.type.match(/^arr/))]
+  #  then:
+  #    - field: maxItems
+  #      function: defined
+
+  regex-work-around:
+    formats: [oas3_1]
+    given:
+      - $..[?(@.type !== undefined && @.type.match(/^arr/))]
+    then:
+      - field: maxItems
+        function: defined

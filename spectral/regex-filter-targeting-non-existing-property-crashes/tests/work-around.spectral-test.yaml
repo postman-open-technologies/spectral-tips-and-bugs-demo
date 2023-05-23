@@ -1,0 +1,20 @@
+spectralTestSuite: "0.1"
+ruleset: ../work-around.spectral-v6.yaml
+rules:
+  regex-work-around:
+    format: openapi
+    versions: [ "3.1" ]
+    given:
+      - description: Should not crash
+        expected: []
+        documents:
+          openapi: "3.1.0"
+          info:
+            title: An API
+            version: "1.0"
+          components:
+            schemas:
+              SchemaObject:
+                properties:
+                  aProperty:
+                    type: string

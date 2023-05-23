@@ -1,6 +1,12 @@
-# Recursive descent ".." ignores first level #
+# Recursive descent `parent..[?(@.something filter)]` ignores first level
 
-In Spectral, a given path containing `..[<filter>]` will only find elements beyond the first level.
+In Spectral, a given path containing `parent..[?(@.something filter)]` will only find elements beyond the first level of parent. Any other path using `..` includes the first level.
+
+- `$..type` ✅
+- `$..[?(@property == "type")]` ✅
+- `$..[?(@property.match("type"))]` ✅  
+- `$..[?(@.type == "object")]` ❌
+- `$..[?(@property == "type" && @ == "object")]` ✅ 
 
 # Issue
 
@@ -40,28 +46,58 @@ components:
         aBooleanProperty:
           type: boolean # Found
 ```
-# Work around
+# Workarounds
 
-A possible work around consists in adding a path specifically targeting first level.
-
-Bug:
+Original path:
 
 ```
 given:
-  - $.some.path..[<filter>]
+  - $.components.schemas.*..[?(@.type=="array")]
 ```
 
-Work around:
+Unit test: `npm run test -- --rule recursive-descent-and-filter-bug`
+
+## Adding a path targeting first level
+
+Adding a path specifically targeting first level may fix the problem.
+This work around is not application at `$` level as `$[?(@.something filter)]` doesn't seem to work.
 
 ```
 given:
-  - $.some.path..[<filter>]
-  - $.some.path.[<filter>]
+  - $.components.schemas.[?(@.type=="array")]
+  - $.components.schemas.*..[?(@.type=="array")]
 ```
+
+Unit tests: `npm run test -- --rule recursive-descent-and-filter-work-around-1`
+
+## Moving one level up
+
+Moving one level up may fix the problem.
+This work around is not application at `$` level as `$[?(@.something filter)]` doesn't seem to work.
+
+```
+given:
+  - $.components.schemas..[?(@.type=="array")]
+```
+
+Unit tests: `npm run test -- --rule recursive-descent-and-filter-work-around-2`
+
+
+## Use @property
+
+Replace @.something by a filter based on property name (`@property`) and value (`@`) and take parent (`^`).
+Not applicable if the filter is `@.something.match(regex)`
+
+```
+given:
+  - $.components.schemas..[?(@property=="type" && @ == "array")]^
+```
+
+Unit tests: `npm run test -- --rule recursive-descent-and-filter-work-around-3`
 
 # Unit tests
 
-## Unit test for rule demonstrating the bug
+## Unit test for rule demonstrating the problem
 
 Run unit test only for bug: `npm run recursive-descent-ignores-first-level-bug-unit-test`
 
@@ -111,7 +147,7 @@ Run all unit tests (bug demo, work around, no problem without filter): `recursiv
 
 # Spectral run with sample documents
 
-Run on sample document: `npm run recursive-descent-ignores-first-level-spectral-run`
+Run on sample document: `npm run spectral-run-recursive-descent`
 
 The `recursive-descent-and-filter-bug` detects only 1 issue instead of 2 (as `recursive-descent-and-filter-work-around-1` and `recursive-descent-and-filter-work-around-2` do).
 

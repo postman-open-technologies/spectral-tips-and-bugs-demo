@@ -1,0 +1,26 @@
+description: ""
+rules:
+  regex-crash:
+    formats: [oas3_1]
+    given:
+      - $.components.schemas..[?(@.type.match(/^arr/))]
+    then:
+      - field: maxItems
+        function: defined
+
+  # Note: crashes also without the recursive descent operator
+  regex-crash-2:
+    formats: [oas3_1]
+    given:
+      - $.components.schemas.SchemaObject[?(@.type.match(/^arr/))]
+    then:
+      - field: maxItems
+        function: defined
+
+
+  #regex-work-around:
+  #  given:
+  #    - $..[?(@.type !== undefined && @.type.match(/^arr/))]
+  #  then:
+  #    - field: maxItems
+  #      function: defined

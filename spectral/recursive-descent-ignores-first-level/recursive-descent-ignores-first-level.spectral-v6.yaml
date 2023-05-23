@@ -29,6 +29,15 @@ rules:
       - field: maxItems
         function: defined
 
+  recursive-descent-and-filter-work-around-3:
+    formats:
+      - oas3_1
+    given:
+      - $.components.schemas..[?(@property=="type" && @ == "array")]
+    then:
+      - field: maxItems
+        function: defined
+
   recursive-descent-without-filter:
     formats:
       - oas3_1
